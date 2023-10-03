@@ -2,3 +2,4 @@
 __pycache__/
 new.db
 config.py
+audio_recognition/__pycache__/
