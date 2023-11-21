@@ -9,4 +9,5 @@ Datasets_Generator/*
 !Datasets_Generator/dataset_processing.py
 !Datasets_Generator/model_train.py
 !Datasets_Generator/model_prediction.py
+!Datasets_Generator/data_parsing.py
 !Datasets_Generator/model_test.py
