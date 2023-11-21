@@ -110,7 +110,7 @@ from new_dataset import dataset
 dataset = pd.DataFrame(dataset)
 col_names = ['text', 'date', 'time', 'idea', 'rubbish']
 dataset.columns = col_names
-dataset = dataset.drop('date', axis=1).drop('time', axis=1).drop('rubbish', axis=1)
+# dataset = dataset.drop('date', axis=1).drop('time', axis=1).drop('rubbish', axis=1)
 print(dataset)
 
 training_data = []
@@ -120,6 +120,11 @@ for row in dataset.itertuples():
     ent_list = []
     for item in row.idea:
         ent_list.append((text.find(item), text.find(item) + len(item), 'NTFY'))
+    for item in row.date:
+        ent_list.append((text.find(item), text.find(item) + len(item), 'DATE'))
+    for item in row.time:
+        ent_list.append((text.find(item), text.find(item) + len(item), 'TIME'))
+
     dict_['entities'] = ent_list
     training_data.append(dict_)
 
@@ -135,22 +140,22 @@ doc_bin = DocBin()
 
 from spacy.util import filter_spans
 
-# for training_example in tqdm(training_data):
-#     text = training_example['text']
-#     labels = training_example['entities']
-#     doc = nlp.make_doc(text)
-#     ents = []
-#     for start, end, label in labels:
-#         span = doc.char_span(start, end, label=label, alignment_mode="contract")
-#         if span is None:
-#             print("Skipping entity")
-#         else:
-#             ents.append(span)
-#     filtered_ents = filter_spans(ents)
-#     doc.ents = filtered_ents
-#     doc_bin.add(doc)
-#
-# doc_bin.to_disk("train2.spacy")
+for training_example in tqdm(training_data):
+    text = training_example['text']
+    labels = training_example['entities']
+    doc = nlp.make_doc(text)
+    ents = []
+    for start, end, label in labels:
+        span = doc.char_span(start, end, label=label, alignment_mode="contract")
+        if span is None:
+            print("Skipping entity")
+        else:
+            ents.append(span)
+    filtered_ents = filter_spans(ents)
+    doc.ents = filtered_ents
+    doc_bin.add(doc)
+
+doc_bin.to_disk("train_with_date_time.spacy")
 
 '''now data is processed. now we need to train'''
 
@@ -170,9 +175,7 @@ print()
 for ent in doc.ents:
     print(ent.text, ent.label_)
 
-print()
-for ent in doc2.ents:
-    print(ent.text, ent.label_)
+
 
 
 
