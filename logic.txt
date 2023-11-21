@@ -1,9 +1,7 @@
-добавляем обработчик гс в любом состоянии => новое напоминание
-обработчик вызывает функцию Ф1, которая возвращает поля бд
-данные поля записываются в бд как новое напоминание
+Next steps
 
-Ф1: вызывает последовательно две функции - Ф2 и Ф3, на выход - поля бд
-Ф2: на вход - аудиофайл, на выход - такст аудиофайла
-Ф3: на вход - текст (с напоминанием), на выход - поля бд
-
-Как тестировать обе части?
+* adjust bot logic to apply voice notifications
+* in text-to-entities model:	
++ offset params  		
++ may be add "rubbish" entity 		
++ may be generate bigger dataset with the variety of notifications.
