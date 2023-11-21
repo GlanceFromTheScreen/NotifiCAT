@@ -5,5 +5,8 @@ config.py
 gpt_key.txt
 audio_recognition/__pycache__/
 Datasets_Generator/*
-!Datasets_Generator/gpt_provider.py
 !Datasets_Generator/new_dataset.py
+!Datasets_Generator/dataset_processing.py
+!Datasets_Generator/model_train.py
+!Datasets_Generator/model_prediction.py
+!Datasets_Generator/model_test.py
