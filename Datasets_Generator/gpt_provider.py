@@ -76,7 +76,6 @@ print(neigh.predict(model25['remind'].reshape(1, -1)))
 # # Загрузка модели spaCy для английского языка
 # nlp = spacy.load("en_core_web_sm")
 #
-# print('cat')
 # # Функция для извлечения дня и времени из текста напоминания
 # def extract_day_and_time(text):
 #     # Обработка текста с использованием spaCy
@@ -130,7 +129,8 @@ from spacy.tokens import DocBin
 from tqdm import tqdm
 import spacy
 
-nlp = spacy.blank("en") # load a new spacy model
+# nlp = spacy.blank("en") # load a new spacy model
+nlp = spacy.load("en_core_web_sm")
 doc_bin = DocBin()
 
 from spacy.util import filter_spans
@@ -150,14 +150,20 @@ from spacy.util import filter_spans
 #     doc.ents = filtered_ents
 #     doc_bin.add(doc)
 #
-# doc_bin.to_disk("train.spacy")
+# doc_bin.to_disk("train2.spacy")
 
 '''now data is processed. now we need to train'''
 
 nlp_ner = spacy.load("model-best")
-doc = nlp_ner("kf ihfkufdk lglh y6 l85 jfjl")
+doc = nlp_ner("schedule meeting on December 22 at 15:55")
+doc2 = nlp("schedule meeting on December 22 at 15:55")
 
+print()
 for ent in doc.ents:
+    print(ent.text, ent.label_)
+
+print()
+for ent in doc2.ents:
     print(ent.text, ent.label_)
 
 
