@@ -154,6 +154,14 @@ from spacy.util import filter_spans
 
 '''now data is processed. now we need to train'''
 
+'''
+commands that has to be run in terminal to
+1) create config
+    python -m spacy init fill-config base_config.cfg config.cfg
+2) train model
+    python -m spacy train config.cfg --output ./ --paths.train ./train2.spacy --paths.dev ./train2.spacy 
+'''
+
 nlp_ner = spacy.load("model-best")
 doc = nlp_ner("schedule meeting on December 22 at 15:55")
 doc2 = nlp("schedule meeting on December 22 at 15:55")
