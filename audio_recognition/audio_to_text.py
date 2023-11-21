@@ -1,7 +1,16 @@
-import whisper
+##############################
+# MODELS VARIANTS
+# model = whisper.load_model('base')
+# do not forget to import whisper
+#
+# SENTENCE EXAMPLE
+# sentence = "remind me to catch the bus tomorrow at 13:45"
+##############################
 
-if __name__ == '__main__':
-    model = whisper.load_model('base')
-    res = model.transcribe('feed.m4a', fp16=False)
+def audio_recognition(file_path, model):
+    res = model.transcribe(file_path, fp16=False)
+    return res['text']
 
-    print(res['text'])
+
+
+

@@ -17,16 +17,16 @@ dataset.columns = col_names
 # VARIANT 1 - NO TIME AND DATE IN ENTITIES TUPLES #
 ##############################
 
-training_data = []
-for row in dataset.itertuples():
-    text = row.text[0]
-    dict_ = {"text": text}
-    ent_list = []
-    for item in row.idea:
-        ent_list.append((text.find(item), text.find(item) + len(item), 'NTFY'))
-
-    dict_['entities'] = ent_list
-    training_data.append(dict_)
+# training_data = []
+# for row in dataset.itertuples():
+#     text = row.text[0]
+#     dict_ = {"text": text}
+#     ent_list = []
+#     for item in row.idea:
+#         ent_list.append((text.find(item), text.find(item) + len(item), 'NTFY'))
+#
+#     dict_['entities'] = ent_list
+#     training_data.append(dict_)
 
 ##############################
 # VARIANT 2 - WITH TIME AND DATE IN ENTITIES TUPLES #

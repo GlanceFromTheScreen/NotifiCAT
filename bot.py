@@ -16,8 +16,6 @@ from datetime import timedelta
 import aioschedule
 import asyncio
 
-import os
-
 
 #  запуск бота каждые полминуты
 async def scheduler():

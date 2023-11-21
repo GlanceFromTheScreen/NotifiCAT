@@ -2,6 +2,7 @@
 # MODELS VARIANTS
 # nlp = spacy.load("en_core_web_sm")
 # nlp_ner = spacy.load("model-best")
+# do not forget to import spacy
 #
 # SENTENCE EXAMPLE
 # sentence = "remind me to catch the bus tomorrow at 13:45"
