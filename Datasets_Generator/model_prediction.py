@@ -9,7 +9,13 @@
 ##############################
 
 
+def clean_sentence(sentence):
+    sentence = sentence[:-1]
+    return sentence.replace(".", ":")
+
+
 def classify_entities(sentence, main_model, aux_model=None):
+    sentence = clean_sentence(sentence)
     entities = []
     doc = main_model(sentence)
     if aux_model is None:  # use only my model

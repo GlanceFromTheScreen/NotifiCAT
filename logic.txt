@@ -5,3 +5,31 @@ Next steps
 + offset params  		
 + may be add "rubbish" entity 		
 + may be generate bigger dataset with the variety of notifications.
++ analyse the quality
+
+To add:
+* "half past 5" times
+* please option
+* IN 30 minutes
+* убрать 5th относящиеся к ntfy
+* дообучать на примерах с нечаянно пропущенными словами (at!)
+
+Work perfectly:
+
+* remind me today at 10pm to feed my cat
+* remind me tomorrow at 10:33 to go walking with my friends
+
+Work so-so
+
+* rimind me on the [2nd] of December to [go walking] отностит 2nd лишними, и если написано second то не читает.
+
+Говорить dot чтобы ставилась точка: не 1933, а 19.33
+Говорить 5th of January побыстрее, отдельно от остального
+
+Оьработать состояния - есди приходит гс, то сброс/ клавиатура/ удалять сообщение
+
+Глобально запоминать msg который надо удалять
+
+
+
+

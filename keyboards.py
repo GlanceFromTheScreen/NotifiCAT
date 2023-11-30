@@ -64,3 +64,12 @@ def get_ikb_with_filenames(list_of_files: list) -> InlineKeyboardMarkup:
         ikb.add(InlineKeyboardButton(text=f'{list_of_files[i]}',
                                      callback_data=f'{list_of_files[i]}'))
     return ikb
+
+
+def get_ikb_with_confirmation() -> InlineKeyboardMarkup:
+    ikb = InlineKeyboardMarkup(row_width=1)
+    ikb.add(InlineKeyboardButton(text=f'Create notification',
+                                 callback_data=f'create_confirm'))\
+       .add(InlineKeyboardButton(text=f'Cancel notification',
+                                 callback_data=f'cancel_confirm'))
+    return ikb

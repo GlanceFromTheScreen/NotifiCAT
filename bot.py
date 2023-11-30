@@ -5,16 +5,34 @@ from aiogram.dispatcher.filters.state import StatesGroup, State
 
 from aiogram.dispatcher.filters import Text
 from aiogram_calendar import simple_cal_callback, SimpleCalendar
-from aiogram.types import Message, CallbackQuery
+from aiogram.types import Message, CallbackQuery, ContentType, File, Message
 
 from keyboards import *
 from sqlite import *
 
-from config import TOKEN_API
+from config import TOKEN_API, PATH_TO_AUDIO
 import datetime
 from datetime import timedelta
 import aioschedule
 import asyncio
+
+from pathlib import Path
+
+import whisper
+from audio_recognition.audio_to_text import audio_recognition
+import spacy
+from Datasets_Generator.model_prediction import classify_entities
+from Datasets_Generator.data_parsing import get_dict_of_data
+from Datasets_Generator.audio_to_notification_pipeline import pipeline
+
+import os
+
+#########
+# MODELS
+#########
+nlp = None
+nlp_ner = None
+whisper_model = None
 
 
 #  запуск бота каждые полминуты
@@ -76,6 +94,20 @@ async def on_startup(_):
     await db_start()
     asyncio.create_task(scheduler())
 
+    '''загружаем модели распознавания'''
+
+    print('DOWNLOAD MODELS...')
+
+    global nlp
+    global nlp_ner
+    global whisper_model
+
+    nlp = spacy.load("en_core_web_sm")
+    nlp_ner = spacy.load("Datasets_Generator/model-best")
+    whisper_model = whisper.load_model('base')
+
+    print('DONE')
+
 
 storage = MemoryStorage()
 bot = Bot(TOKEN_API)
@@ -89,6 +121,7 @@ class NotificationStatesGroup(StatesGroup):
     calendar = State()
     time = State()
     file = State()
+    audio_message = State()
 
 
 class UpdateNotificationsStateGroup(StatesGroup):
@@ -120,6 +153,73 @@ async def back_to_main_menu(message: types.Message, state: FSMContext) -> None:
 
 
 """-----ветка про добавление напоминания-----"""
+
+
+async def handle_file(file: File, file_name: str, path: str):
+    Path(f"{path}").mkdir(parents=True, exist_ok=True)
+
+    await bot.download_file(file_path=file.file_path, destination=f"{path}/{file_name}")
+
+
+@dp.message_handler(content_types=[ContentType.VOICE])
+async def voice_message_handler(message: Message, state: FSMContext):
+
+    await NotificationStatesGroup.audio_message.set()  # установили состояние описания
+
+    msg = await message.answer("Обрабатываю...")
+    voice = await message.voice.get_file()
+    path = PATH_TO_AUDIO
+
+    await handle_file(file=voice, file_name=f"{voice.file_id}.m4a", path=path)
+
+    path += f"\\{voice.file_id}.m4a"
+
+    await msg.delete()
+    msg = await message.answer("Загружено. Классифицирую...")
+
+    ans = pipeline(path, whisper_model, nlp_ner, nlp)
+
+    addition_message = ""
+
+    async with state.proxy() as data:
+        if ans['NTFY'] == "":
+            await message.answer("can't read notification. Please, rerecord it.")
+            return
+        else:
+            data['description'] = ans['NTFY']
+
+            if ans['DATE'] is None:
+                data['calendar'] = datetime.date.today().strftime("%d/%m/%Y")
+                addition_message += "can't find date. set today\n\n"
+            else:
+                data['calendar'] = ans['DATE'].strftime("%d/%m/%Y")
+
+            if ans['TIME'] is None:
+                data['time'] = datetime.datetime.now().strftime("%H:%M")
+                addition_message = addition_message[:-1] + "can't find time. set current\n\n"
+            else:
+                data['time'] = ans['TIME'].strftime("%H:%M")
+
+    await msg.delete()
+    await message.answer(f"{addition_message}"
+                         f"{data['description']}\n"
+                         f"on {data['calendar']}\n"
+                         f"at {data['time']}", reply_markup=get_ikb_with_confirmation())
+    os.remove(path)
+
+
+@dp.callback_query_handler(state=NotificationStatesGroup.audio_message)
+async def callback_check_actual_tasks(callback: types.CallbackQuery, state: FSMContext):
+    if callback.data == "create_confirm":
+        await add_notification_in_table(state, user_id=callback.from_user.id)
+        await callback.message.answer(f'Notification created!',
+                                      reply_markup=get_main_kb())
+    else:
+        await callback.message.answer(f'Notification is not created',
+                                      reply_markup=get_main_kb())
+
+    await state.finish()
+    await callback.message.delete()
 
 
 #  обработчик команды "Добавить напонинание"
