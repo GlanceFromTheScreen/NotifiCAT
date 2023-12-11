@@ -8,7 +8,7 @@
 ##############################
 
 def audio_recognition(file_path, model):
-    res = model.transcribe(file_path, fp16=False)
+    res = model.transcribe(file_path, fp16=False, language='en')
     return res['text']
 
 

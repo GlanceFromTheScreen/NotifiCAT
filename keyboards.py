@@ -8,17 +8,17 @@ def get_main_kb() -> ReplyKeyboardMarkup:
     :return:
     """
     kb = ReplyKeyboardMarkup(resize_keyboard=True)
-    kb.add(KeyboardButton('Добавить напоминание'), KeyboardButton('Редактировать текущие дела')) \
-        .add(KeyboardButton('Посмотреть запланированные дела'), KeyboardButton('Посмотреть завершенные дела'))
+    kb.add(KeyboardButton('Add notification'), KeyboardButton('Edit future plans')) \
+        .add(KeyboardButton('List of plans'), KeyboardButton('List of completed plans'))
     return kb
 
 
 def get_what_to_change_kb() -> ReplyKeyboardMarkup:
     kb = ReplyKeyboardMarkup(resize_keyboard=True)
-    kb.add(KeyboardButton('Описание')) \
-        .add(KeyboardButton('Дата'), KeyboardButton('Время')) \
-        .add(KeyboardButton('Отметить как выполненное'), KeyboardButton('Изменить периодичность')) \
-        .add(KeyboardButton('Удалить напоминание'), KeyboardButton('Вернуться в главное меню'))
+    kb.add(KeyboardButton('Description')) \
+        .add(KeyboardButton('Date'), KeyboardButton('Time')) \
+        .add(KeyboardButton('Mark as \'DONE\''), KeyboardButton('Edit periodicity')) \
+        .add(KeyboardButton('Delete NotifiCATion'), KeyboardButton('Back to main menu'))
 
     return kb
 
@@ -37,14 +37,14 @@ def get_done_tasks_kb() -> ReplyKeyboardMarkup:
     :return:
     """
     kb = ReplyKeyboardMarkup(resize_keyboard=True)
-    kb.add(KeyboardButton('Вернуть дело в незавершенное'), KeyboardButton('Вернуться в главное меню'))
+    kb.add(KeyboardButton('Return plan to \'UNDONE\''), KeyboardButton('Back to main menu'))
 
     return kb
 
 
 def get_back_kb() -> ReplyKeyboardMarkup:
     kb = ReplyKeyboardMarkup(resize_keyboard=True)
-    kb.add(KeyboardButton('Вернуться в главное меню'))
+    kb.add(KeyboardButton('Back to main menu'))
 
     return kb
 

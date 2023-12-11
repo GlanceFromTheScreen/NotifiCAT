@@ -9,15 +9,20 @@ Next steps
 
 To add:
 * "half past 5" times
-* please option
-* IN 30 minutes
-* убрать 5th относящиеся к ntfy
+please option
+on monday вперед
+убрать 5th относящиеся к ntfy
 * дообучать на примерах с нечаянно пропущенными словами (at!)
+* about убрать из ntfy
+* 2024 относит к напоминанию
+* to Moscow
 
 Work perfectly:
 
 * remind me today at 10pm to feed my cat
 * remind me tomorrow at 10:33 to go walking with my friends
+* remind me to go travelling on April 5th 2024 at 10:43
+* remind me in 30 minutes to watch film
 
 Work so-so
 

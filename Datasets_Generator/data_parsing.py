@@ -10,12 +10,15 @@ import dateparser
 def get_dict_of_data(arr):
     dict_ = {'NTFY': "", 'DATE': "", 'TIME': ""}
     for record in arr:
-        for key in dict_:
-            if record[1] == key:
-                dict_[key] += record[0] + " "
+        if record[1] == "NTFY" or record[1] == "GPE":
+            dict_["NTFY"] += record[0] + " "
+        elif record[1] == "DATE":
+            dict_["DATE"] += record[0] + " "
+        elif record[1] == "TIME":
+            dict_["TIME"] += record[0] + " "
 
-    dict_['DATE'] = dateparser.parse(dict_['DATE'])
-    dict_['TIME'] = dateparser.parse(dict_['TIME'])
+    dict_['DATE'] = dateparser.parse(dict_['DATE'], settings={'PREFER_DATES_FROM': 'future'})
+    dict_['TIME'] = dateparser.parse(dict_['TIME'], settings={'PREFER_DATES_FROM': 'future'})
 
     return dict_
 
