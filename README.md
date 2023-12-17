@@ -1,23 +1,23 @@
-Телеграм - бот, реализующий функционал to-do list приложения с возможностью добавлять напоминания голосовым сообщением.
-См. подробнеее в DOCUMENTATION.pdf
-
-При сборке не забыть добавить config.py
-
-Возможности:
-1) Выбор даты, времени напоминания
-2) Просмотр завершенных и незавершенных напоминаний
-3) Редактор напоминания (изменение параметров)
-4) Отметка напоминания как периодического (через редактор)
-5) Перенесение напоминания в выполненные (через редактор)
-6) Возвращение напоминания в незавершенные (через список завершенных напоминаний)
-7) Удаление напоминания (через редактор) 
-8) Отправка напоминания, если настали дата и время
-
-
-Реализация:
-1) Бот: python + aiogram 2.25.1
-2) Данные о напоминании хранятся в базе данных sqlite
-
-
+## To-do list telegram-bot with opportunity to add notifications with voice messages.
+  
+# Main functionality:  
+1) Add notification using buttons and bot chat 
+2) Add notification using voice messages  
+3) View the list of done / undone plans  
+4) Move notification to done / undone  
+5) edit notification  
+6) delete notification  
+7) create periodic notification  
+  
+# Before building:  
+1) Add your config.py  
+2) in Datasets_Generator/model_train.py execute mentioned commands to create a model (in Datasets_Generator/config.txt change model params)   
+  
+# Implementation:
+1) Tg-bot: python + ariogram 2.25.1
+2) sqlite
+3) spacy, whisper, dateparser (ml models)  
+  
+# See documentation and examples in DOCUMENTATION.pdf
 
 

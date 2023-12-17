@@ -1,6 +1,7 @@
 .idea/
 __pycache__/
 new.db
+logic.txt
 config.py
 gpt_key.txt
 audio_recognition/__pycache__/
