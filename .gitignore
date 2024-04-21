@@ -1,6 +1,9 @@
 .idea/
 __pycache__/
 new.db
+summarization/model_clean_save_torch
+summarization/model_trained_save_torch
+summarization/__pycache__/
 logic.txt
 config.py
 gpt_key.txt

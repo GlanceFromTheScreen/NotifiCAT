@@ -9,7 +9,8 @@ def get_main_kb() -> ReplyKeyboardMarkup:
     """
     kb = ReplyKeyboardMarkup(resize_keyboard=True)
     kb.add(KeyboardButton('Add notification'), KeyboardButton('Edit future plans')) \
-        .add(KeyboardButton('List of plans'), KeyboardButton('List of completed plans'))
+        .add(KeyboardButton('List of plans'), KeyboardButton('List of completed plans')) \
+        .add(KeyboardButton('Record lecture'))
     return kb
 
 
